@@ -1,5 +1,22 @@
 defaults:
+  - dataset: starcraft
+  - model: gan
+
   - paths
+  - hydra/hydra
+  - hydra/job_logging
+  - _self_
   - override hydra/job_logging: colorlog
   - override hydra/hydra_logging: colorlog
-  - _self_
+
+
+hydra:
+  mode:
+    RUN
+  sweeper:
+    params:
+      dataset: glob(*)
+      model: glob(*)
+
+version:
+  0.1.0

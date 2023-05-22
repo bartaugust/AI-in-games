@@ -1,0 +1,16 @@
+# @package model
+
+name:
+  gan
+load:
+  _target_: src.model_preparation.gan.GAN
+
+
+latent_size:
+  128
+batch_size:
+  ${dataset.dataloader.batch_size}
+epochs:
+  10
+lr:
+  1e-5

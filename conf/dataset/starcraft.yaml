@@ -1,0 +1,18 @@
+# @package dataset
+
+load:
+  _target_: torchvision.datasets.ImageFolder
+  root: ${paths.datasets}/starcraft
+
+transform:
+  _target_: torchvision.transforms.Compose
+  transforms:
+    - _target_: torchvision.transforms.Resize
+      size: [ 256,256 ]
+    - _target_: torchvision.transforms.ToTensor
+    - _target_: torchvision.transforms.Normalize
+      mean: [ 0.5, 0.5, 0.5 ]
+      std: [ 0.5, 0.5, 0.5 ]
+data_loader:
+  batch_size: 32
+  shuffle: True

@@ -1,3 +1,7 @@
 # @package paths
 
-log_path: ???
+wrk: /home/trabor/PycharmProjects/AI-in-games
+
+config: ${paths.wrk}/conf/
+datasets: ${paths.wrk}/datasets/
+output: ${paths.wrk}/outputs/
