@@ -1,6 +1,0 @@
-# @package model
-
-name:
-  vae
-load:
-  _target_: pl_bolts.models.autoencoders.VAE

@@ -9,38 +9,46 @@ import matplotlib.pyplot as plt
 from torchvision.utils import make_grid
 
 
-class GAN:
+class DGAN128:
     def __init__(self, cfg):
         super().__init__()
-        self.sample_dir = 'generated'
+        self.sample_dir = cfg.paths.generated
         self.stats = (0.5, 0.5, 0.5), (0.5, 0.5, 0.5)
         os.makedirs(self.sample_dir, exist_ok=True)
         self.cfg = cfg
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
+        # self.device = 'cpu'
         def build_discriminator():
             discriminator = nn.Sequential(
                 # in: 3 x 64 x 64
 
-                nn.Conv2d(3, 256, kernel_size=4, stride=2, padding=1, bias=False),
-                nn.BatchNorm2d(256),
+                nn.Conv2d(3, 128, kernel_size=4, stride=2, padding=1, bias=False),
+                nn.BatchNorm2d(128),
                 nn.LeakyReLU(0.2, inplace=True),
                 # out: 64 x 32 x 32
+
+                # nn.Conv2d(64, 128, kernel_size=4, stride=2, padding=1, bias=False),
+                # nn.BatchNorm2d(128),
+                # nn.LeakyReLU(0.2, inplace=True),
+                # # out: 128 x 16 x 16
+
+                nn.Conv2d(128, 256, kernel_size=4, stride=2, padding=1, bias=False),
+                nn.BatchNorm2d(256),
+                nn.LeakyReLU(0.2, inplace=True),
+                # out: 256 x 8 x 8
 
                 nn.Conv2d(256, 512, kernel_size=4, stride=2, padding=1, bias=False),
                 nn.BatchNorm2d(512),
                 nn.LeakyReLU(0.2, inplace=True),
-                # out: 128 x 16 x 16
-
+                # out: 512 x 4 x 4
                 nn.Conv2d(512, 1024, kernel_size=4, stride=2, padding=1, bias=False),
                 nn.BatchNorm2d(1024),
                 nn.LeakyReLU(0.2, inplace=True),
-                # out: 256 x 8 x 8
 
                 nn.Conv2d(1024, 2048, kernel_size=4, stride=2, padding=1, bias=False),
                 nn.BatchNorm2d(2048),
                 nn.LeakyReLU(0.2, inplace=True),
-                # out: 512 x 4 x 4
 
                 nn.Conv2d(2048, 1, kernel_size=4, stride=1, padding=0, bias=False),
                 # out: 1 x 1 x 1
@@ -62,19 +70,25 @@ class GAN:
                 nn.ConvTranspose2d(2048, 1024, kernel_size=4, stride=2, padding=1, bias=False),
                 nn.BatchNorm2d(1024),
                 nn.ReLU(True),
-                # out: 256 x 8 x 8
-
+                #
                 nn.ConvTranspose2d(1024, 512, kernel_size=4, stride=2, padding=1, bias=False),
                 nn.BatchNorm2d(512),
                 nn.ReLU(True),
-                # out: 128 x 16 x 16
 
                 nn.ConvTranspose2d(512, 256, kernel_size=4, stride=2, padding=1, bias=False),
                 nn.BatchNorm2d(256),
                 nn.ReLU(True),
+                # out: 256 x 8 x 8
+
+                nn.ConvTranspose2d(256, 128, kernel_size=4, stride=2, padding=1, bias=False),
+                nn.BatchNorm2d(128),
+                nn.ReLU(True),
+                # out: 128 x 16 x 16
+
+
                 # out: 64 x 32 x 32
 
-                nn.ConvTranspose2d(256, 3, kernel_size=4, stride=2, padding=1, bias=False),
+                nn.ConvTranspose2d(128, 3, kernel_size=4, stride=2, padding=1, bias=False),
                 nn.Tanh()
                 # out: 3 x 64 x 64
             )
@@ -172,8 +186,8 @@ class GAN:
             # Log losses & scores (last batch)
             print("Epoch [{}/{}], loss_g: {:.4f}, loss_d: {:.4f}, real_score: {:.4f}, fake_score: {:.4f}".format(
                 epoch + 1, self.cfg.model.epochs, loss_g, loss_d, real_score, fake_score))
-
+            fixed_latent = torch.randn(64, self.cfg.model.latent_size, 1, 1, device=self.device)
             # Save generated images
-            # save_samples(epoch + start_idx, fixed_latent, show=False)
+            self.save_samples(epoch + start_idx, fixed_latent, show=False)
 
         return losses_g, losses_d, real_scores, fake_scores

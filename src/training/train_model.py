@@ -17,7 +17,8 @@ torch.set_float32_matmul_precision('high')
 def train(cfg: DictConfig):
     dataloader = load_data(cfg)
     model = load_model(cfg)
-    model.fit(dataloader)
+    losses_g, losses_d, real_scores, fake_scores = model.fit(dataloader)
+    print('a')
     # trainer = pl.Trainer()
     # trainer.fit(model=model, train_dataloaders=dataloader)
 
@@ -28,3 +29,5 @@ if __name__ == '__main__':
     except Exception as e:
         logging.exception(e)
         raise e
+
+

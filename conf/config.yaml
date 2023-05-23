@@ -1,6 +1,6 @@
 defaults:
-  - dataset: starcraft
-  - model: gan
+  - dataset: landscape
+  - model: dgan128
 
   - paths
   - hydra/hydra

@@ -1,0 +1,16 @@
+# @package model
+
+name:
+  dgan128
+load:
+  _target_: src.model_preparation.dgan128.DGAN128
+
+
+latent_size:
+  256
+batch_size:
+  ${dataset.data_loader.batch_size}
+epochs:
+  1000
+lr:
+  1e-4
