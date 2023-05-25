@@ -9,10 +9,15 @@ load:
 transform:
   _target_: torchvision.transforms.Compose
   transforms:
-#    - _target_: torchvision.transforms.CenterCrop
-#      size: [ 64,64 ]
+
     - _target_: torchvision.transforms.Resize
-      size: [ 128,128 ]
+      size:
+        - ${model.input_size}
+        - ${model.input_size}
+    - _target_: torchvision.transforms.CenterCrop
+      size:
+        - ${model.input_size}
+        - ${model.input_size}
     - _target_: torchvision.transforms.ToTensor
     - _target_: torchvision.transforms.Normalize
       mean: [ 0.5, 0.5, 0.5 ]

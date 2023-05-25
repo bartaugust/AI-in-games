@@ -1,15 +1,17 @@
 # @package dataset
 name:
-  starcraft
+  impresionism
 load:
   _target_: torchvision.datasets.ImageFolder
-  root: ${paths.datasets}/starcraft
+  root: ${paths.datasets}/impresionism
 
 transform:
   _target_: torchvision.transforms.Compose
   transforms:
 #    - _target_: torchvision.transforms.CenterCrop
-#      size: [ 64,64 ]
+#      size:
+#        - ${model.input_size}
+#        - ${model.input_size}
     - _target_: torchvision.transforms.Resize
       size:
         - ${model.input_size}
@@ -19,5 +21,5 @@ transform:
       mean: [ 0.5, 0.5, 0.5 ]
       std: [ 0.5, 0.5, 0.5 ]
 data_loader:
-  batch_size: 16
+  batch_size: 128
   shuffle: True

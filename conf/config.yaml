@@ -1,5 +1,5 @@
 defaults:
-  - dataset: landscape
+  - dataset: comics
   - model: dgan128
 
   - paths
@@ -16,7 +16,7 @@ hydra:
   sweeper:
     params:
       dataset: glob(*)
-      model: glob(*)
+#      model: glob(*)
 
 version:
-  0.1.0
+  1.0.0

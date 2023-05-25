@@ -7,10 +7,16 @@ load:
 
 
 latent_size:
-  256
+  128
 batch_size:
   ${dataset.data_loader.batch_size}
 epochs:
-  1000
+  200
 lr:
   1e-4
+
+input_size:
+  128
+
+compile:
+  true

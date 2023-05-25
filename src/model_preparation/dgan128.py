@@ -12,7 +12,7 @@ from torchvision.utils import make_grid
 class DGAN128:
     def __init__(self, cfg):
         super().__init__()
-        self.sample_dir = cfg.paths.generated
+        self.sample_dir = cfg.paths.generated + cfg.dataset.name
         self.stats = (0.5, 0.5, 0.5), (0.5, 0.5, 0.5)
         os.makedirs(self.sample_dir, exist_ok=True)
         self.cfg = cfg
@@ -97,6 +97,10 @@ class DGAN128:
 
         self.discriminator = build_discriminator().to(self.device)
         self.generator = build_generator().to(self.device)
+
+        if self.cfg.model.compile:
+            self.discriminator = torch.compile(self.discriminator )
+            self.generator = torch.compile(self.generator)
 
     def denorm(self, img_tensors):
         return img_tensors * self.stats[1][0] + self.stats[0][0]

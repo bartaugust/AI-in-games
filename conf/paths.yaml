@@ -5,4 +5,4 @@ wrk: /home/trabor/PycharmProjects/AI-in-games
 config: ${paths.wrk}/conf/
 datasets: ${paths.wrk}/datasets/
 output: ${paths.wrk}/outputs/
-generated: ${paths.output}/version-${version}/${now:%Y-%m-%d}/${now:%H-%M-%S}/generated
+generated: ${paths.output}/version-${version}/${now:%Y-%m-%d}/${now:%H-%M-%S}/generated/
