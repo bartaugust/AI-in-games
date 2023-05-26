@@ -1,1 +1,1 @@
-# template-python-project
+# Game objects generation
