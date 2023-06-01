@@ -28,7 +28,7 @@ W pliku zawarte są:
 - data_loader - parametry dla pytorch dataloader
 
 W przypadku użycia funkcji ImaageFolder dla load nalezy utworzyć folder o nazwie podanej w parametrze root z dodatkowym subfolderem train zawierający obrazy.
-
+Na początku przygotowanych plików yaml znajdują się linki do pobrania zbiorów.
 ## Modele
 Dostępnymi modelami są dgan (64x64) i dgan128 (128x128).
 Aby zmienić parametry, takie jak krok uczenia czy liczba epok należy zmienić je w pliku yaml modelu znajdującym się w folderze conf/model
