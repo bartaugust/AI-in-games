@@ -1,4 +1,6 @@
 # @package dataset
+# https://www.kaggle.com/datasets/defileroff/comic-faces-paired-synthetic-v2
+# tylko folder comics
 name:
   comics
 load:
