@@ -1,4 +1,6 @@
 # @package dataset
+# https://www.kaggle.com/datasets/ipythonx/wikiart-gangogh-creating-art-gan
+# tylko folder landscape
 name:
   impresionism
 load:
